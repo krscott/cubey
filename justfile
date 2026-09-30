@@ -4,11 +4,14 @@ default:
     just --list
 
 build:
-    printf '%s\n' '#!/usr/bin/env bash' 'set -euo pipefail' 'printf '\''Hello from hello.sh\n'\''' > hello.sh
-    chmod +x hello.sh
+    mkdir -p dist
+    cp site/index.html site/style.css site/app.js site/geometry.js dist/
 
 run: build
-    ./hello.sh
+    python3 -m http.server 8000 --bind 127.0.0.1 --directory dist
+
+test:
+    node --test
 
 # Format files, or all tracked files when no files are provided.
 format *files:
@@ -46,6 +49,13 @@ _format mode *files:
                     just --unstable --fmt --justfile "$file"
                 fi
             ;;
+            *.js|*.json|*.css|*.html|*.md|*.yml)
+                if [[ "$mode" == check ]]; then
+                    prettier --check "$file"
+                else
+                    prettier --write "$file"
+                fi
+            ;;
             *.nix)
                 if [[ "$mode" == check ]]; then
                     nixfmt --check "$file"
@@ -75,7 +85,7 @@ lint:
     done < <(git ls-files -z)
 
 # Run non-mutating formatting, shell, and Nix checks.
-check: format-check lint
+check: format-check lint test
     nix flake check -L --no-update-lock-file
 
 # Format staged files for git pre-commit.

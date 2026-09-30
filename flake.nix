@@ -38,6 +38,9 @@
             shfmt
             shellcheck
             bash
+            nodejs
+            python3
+            prettier
           ];
         };
 
