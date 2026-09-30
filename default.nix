@@ -4,7 +4,7 @@
 }:
 
 stdenv.mkDerivation {
-  name = "flake-start";
+  name = "cubey";
 
   dontUnpack = true;
 
@@ -15,12 +15,12 @@ stdenv.mkDerivation {
     printf '%s\n' \
       '#!/usr/bin/env bash' \
       'set -euo pipefail' \
-      'echo "Hello from flake-start"' \
-      >"$out/bin/flake-start"
-    chmod +x "$out/bin/flake-start"
+      'echo "Hello from cubey"' \
+      >"$out/bin/cubey"
+    chmod +x "$out/bin/cubey"
 
     runHook postInstall
   '';
 
-  meta.mainProgram = "flake-start";
+  meta.mainProgram = "cubey";
 }
