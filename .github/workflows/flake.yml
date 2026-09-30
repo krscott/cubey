@@ -22,5 +22,10 @@ jobs:
       - name: Build
         run: nix build -L
 
-      - name: Run
-        run: nix run -L
+      - name: Serve packaged site
+        run: |
+          nix run -L >/tmp/cubey-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          curl --fail --retry 10 --retry-connrefused --retry-delay 1 http://127.0.0.1:8000/ -o /tmp/cubey-index.html
+          grep -q '<title>Cubey</title>' /tmp/cubey-index.html
