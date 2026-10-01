@@ -21,6 +21,7 @@ stdenvNoCC.mkDerivation {
 
   meta = {
     description = "Perspective drawing references from random boxes";
+    license = lib.licenses.agpl3Only;
     mainProgram = "cubey";
     platforms = lib.platforms.all;
   };
