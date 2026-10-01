@@ -30,6 +30,10 @@ Install the formatting hook with `just install-hooks`. It formats fully staged f
 
 Update dependencies with `nix flake update`.
 
+## License
+
+Licensed under [GNU Affero GPL version 3](LICENSE) (AGPL-3.0-only).
+
 ## Deployment
 
 GitHub Pages deploys `site/` through GitHub Actions after a push to `main`. The repository's Pages source must be set to GitHub Actions. Pull requests run the Nix checks, geometry tests, package build, and a local server smoke test.
